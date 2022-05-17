@@ -1,0 +1,33 @@
+version: "3"
+volumes:
+  dbbackups:
+  postgis-data:
+services:
+  iya_application:
+    image: iya_application
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+    networks:
+      - default
+    volumes:
+      - $PWD/media:/app/media
+    depends_on:
+      - users-bd
+  users-bd:
+    image: kartoza/postgis:12.0
+    expose:
+      - "5433"
+    volumes:
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgis-data:/var/lib/postgresql
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=ipa
+      - POSTGRES_DB=users_service_docker
+    ports:
+      - "5433:5433"
+    restart: on-failure
+    healthcheck:
+      test: "exit 0"

@@ -1,0 +1,1 @@
+ docker build -t iya_application . && docker-compose up
