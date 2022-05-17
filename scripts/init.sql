@@ -1,5 +1,5 @@
 CREATE USER ipa WITH ENCRYPTED PASSWORD 'password';
-GRANT ALL PRIVILEGES ON DATABASE users_service_docker TO ipa;
+GRANT ALL PRIVILEGES ON DATABASE iya_service_docker TO ipa;
 
 
 create table if not exists Users(
@@ -11,7 +11,7 @@ create table if not exists Users(
 
 create table if not exists Sessions(
     session_hash text NOT NULL PRIMARY KEY,
-    user_id text UNIQUE,
+    user_id integer UNIQUE,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 

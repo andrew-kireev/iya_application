@@ -25,7 +25,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=ipa
-      - POSTGRES_DB=users_service_docker
+      - POSTGRES_DB=iya_service_docker
     ports:
       - "5433:5433"
     restart: on-failure
