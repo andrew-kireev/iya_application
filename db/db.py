@@ -42,11 +42,11 @@ class DataBase:
                 return res
 
 
-    def check_session(self, session: str) -> bool:
+    def check_session_by_id(self, user_id: int) -> bool:
          with self.conn:
             with self.conn.cursor() as cur:
                 cur.execute("select 1 from sessions "
-                "where session_hash = %s", (session))
+                "where user_id = %s", (user_id))
 
                 res = cur.fetchone()
                 if res != None:
@@ -60,7 +60,12 @@ class DataBase:
             with self.conn.cursor() as cur:
                 cur.execute("insert into sessions (session_hash, user_id)"
                 "values (%s, %s )", (session, user_id))
-        pass
+
+    def update_session(self, user_id, session) -> None:
+        with self.conn:
+            with self.conn.cursor() as cur:
+                cur.execute("update session set session_hash = %s "
+                "where user_id = %s", (session, user_id))
 
     def logout_user(self, user):
         pass

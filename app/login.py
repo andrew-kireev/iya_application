@@ -19,12 +19,13 @@ def login():
     res = db.login_user(user)
     print(res)
 
+    session = uuid.uuid4().hex
     if res[0] == True:
-        session = uuid.uuid4().hex
+        if db.check_session_by_id():
+            db.update_session(res[1], session)
         db.create_session(user, session)
-        
+
 
     # print(json.dumps(user.__dict__))
     return json.dumps(user.__dict__)
-
 
